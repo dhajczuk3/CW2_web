@@ -17,8 +17,7 @@ class UserDAO {
     init() {
         this.db.insert({
             user: 'Peter',
-            password:
-            '$2b$10$I82WRFuGghOMjtu3LLZW9OAMrmYOlMZjEEkh.vx.K2MM05iu5hY2C'
+            password: 'password'
         });
         this.db.insert({
             user: 'Ann',
@@ -44,14 +43,16 @@ class UserDAO {
         });
     }    
     lookup(username, callback) {
-        this.db.find({user: username}, function(err, docs) {
+        this.db.findOne({ user: username }, function(err, user) {
             if (err) {
+                console.error("Error looking up user:", err);
                 return callback(err);
             }
-            if (docs.length === 0) {
+            if (!user) {
+                console.log("User", username, "not found");
                 return callback(null, null);
             }
-            return callback(null, docs[0]);
+            return callback(null, user);
         });
     }
 }

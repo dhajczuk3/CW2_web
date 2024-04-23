@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Home - Scottish Pantry Network</title>
-</head>
+{{>head}}
 <body>
+
+    {{>navigation}}    
     <h1>Welcome to the Scottish Pantry Network</h1>
+
     <p>This platform connects people with surplus food with pantries in their local area.</p>
-    <a href="/login">Login</a> | <a href="/register">Register</a>
-    <a href="/about">About Us</a> | <a href="/contact">Contact Us</a>
+    
+    {{#if username}}
+      <p>Welcome, {{username}}!</p>
+      <a id="logout" href="/logout" class="btn btn-primary">Sign out</a>
+      <a id="addFoodItem" href="/addFoodItem" class="btn btn-primary">Add Food Item</a>
+    {{else username}}
+      <a href="/login">Login</a> | <a href="/register">Register</a>
+      <a href="/about">About Us</a> | <a href="/contact">Contact Us</a>
+    {{/if username}}
 </body>
 </html>

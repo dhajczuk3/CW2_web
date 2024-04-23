@@ -1,7 +1,9 @@
 const db = require('../models/guestbookModel');
 const userDao = require("../models/userModel");
 const bcrypt = require('bcrypt');
+const jwt = require("jsonwebtoken");
 
+userDao.init();
 
 // Display the login page
 exports.show_login = function(req, res) {
@@ -10,41 +12,61 @@ exports.show_login = function(req, res) {
 
 // Handle user login
 exports.handle_login = function(req, res) {
+    console.log("HANDLE LOGIN");
     const { username, password } = req.body;
+
+    // Step 1: Look up the user
     userDao.lookup(username, function (err, user) {
         if (err) {
             console.error("Error during user lookup", err);
             return res.status(500).render('user/login', { error: 'Internal server error.' });
         }
         if (!user) {
+            console.log("User not found:", username);
             return res.status(401).render('user/login', { error: 'User not found. Please register.' });
         }
 
-        // Here's where compare the passwords
+        // Step 2: Compare passwords
         bcrypt.compare(password, user.password, function (err, result) {
             if (err) {
                 console.error("Error comparing passwords", err);
                 return res.status(500).render('user/login', { error: 'Internal server error during password comparison.' });
             }
             if (result) {
+                // Step 3: Generate access token
+                const accessToken = jwt.sign({ username: user.username, userId: user._id }, process.env.ACCESS_TOKEN_SECRET, {
+                    expiresIn: "1h"
+                });
                 // Password matches
+                console.log("User logged in successfully");
+                res.cookie("jwt", accessToken, { httpOnly: true, secure: true });
                 res.redirect('/'); // Redirect to the home page or dashboard
             } else {
                 // Password does not match
+                console.log("Invalid password for user:", username);
                 return res.status(401).render('user/login', { error: 'Invalid password.' });
             }
         });
     });
 };
 
+
 // Display the landing page after login
 exports.landing_page = function(req, res) {
-    res.render('home', { title: 'Welcome to Our Service' });
+    res.render('home', { title: 'Welcome to Our Service', user: res.locals.user });
+     
 };
 
 // Display the registration form
 exports.show_register_page = function(req, res) {
     res.render('user/register', { title: 'Register' });
+};
+exports.show_contact_page = function(req, res) {
+    res.render('contact', { title: 'Contact Us' });
+};
+
+exports.show_about_page = function(req, res) {
+    res.render('about', { title: 'About Us' });
 };
 
 // Display admin dashboard

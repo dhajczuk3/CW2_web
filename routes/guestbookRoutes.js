@@ -16,6 +16,8 @@ router.get('/login', controller.show_login);  // uses 'user/login.mustache'
 router.post('/login', login, controller.handle_login);
 router.get('/register', controller.show_register_page);  // uses 'user/register.mustache'
 router.post('/register', controller.post_new_user);
+router.get('/contact', controller.show_contact_page);
+router.get('/about', controller.show_about_page);
 
 // Food Management
 router.get('/food', verify, controller.show_available_food);  // uses 'food/foodItems.mustache'
