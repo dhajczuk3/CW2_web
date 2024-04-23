@@ -18,6 +18,8 @@ router.get('/register', controller.show_register_page);  // uses 'user/register.
 router.post('/register', controller.post_new_user);
 router.get('/contact', controller.show_contact_page);
 router.get('/about', controller.show_about_page);
+router.get('/addFoodItem', controller.show_addFood_page);
+
 
 // Food Management
 router.get('/food', verify, controller.show_available_food);  // uses 'food/foodItems.mustache'

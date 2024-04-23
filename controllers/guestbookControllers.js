@@ -53,7 +53,7 @@ exports.handle_login = function(req, res) {
 
 // Display the landing page after login
 exports.landing_page = function(req, res) {
-    res.render('home', { title: 'Welcome to Our Service', user: res.locals.user });
+    res.render('home', { title: 'Welcome to Our Service', user: res.locals.username });
      
 };
 
@@ -67,6 +67,9 @@ exports.show_contact_page = function(req, res) {
 
 exports.show_about_page = function(req, res) {
     res.render('about', { title: 'About Us' });
+};
+exports.show_addFood_page = function(req, res) {
+    res.render('food/addFoodItem', { title: 'add Food Item' });
 };
 
 // Display admin dashboard
