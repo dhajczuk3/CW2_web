@@ -26,9 +26,10 @@ exports.login = function (req, res) {
               const accessToken = jwt.sign({ username: user.username, userId: user._id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "1h" });
               res.cookie("jwt", accessToken, { httpOnly: true, secure: true });
               console.log("User logged in successfully");
-              
+              //res.locals.user = req.user;
+
               // Pass the username to the home page rendering
-              res.render("home", { username: user.username }); // Render the home page with username
+              res.render("home",{username: username}); // Render the home page with username
           } else {
               console.log("Invalid password for user:", username);
               return res.status(401).render("user/login", { error: "Invalid password" });
