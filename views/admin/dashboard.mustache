@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard - Scottish Pantry Network</title>
+</head>
+<body>
+    <h1>Dashboard</h1>
+    {{#isAdmin}}
+    <div>
+        <h2>Admin Panel</h2>
+        <p>Manage Users and Food Items:</p>
+        <a href="/manage-users">Manage Users</a>
+        <a href="/manage-food">Manage Food Items</a>
+    </div>
+    {{/isAdmin}}
+    {{#isPantry}}
+    <div>
+        <h2>Pantry Operations</h2>
+        <p>View and Select Food Items:</p>
+        <a href="/food">View Available Food</a>
+    </div>
+    {{/isPantry}}
+    <a href="/logout">Logout</a>
+</body>
+</html>

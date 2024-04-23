@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Available Food Items - Scottish Pantry Network</title>
+</head>
+<body>
+    <h1>Available Food Items</h1>
+    {{#items}}
+    <div>
+        <h2>{{name}}</h2>
+        <p>Quantity: {{quantity}}</p>
+        <p>Expiry Date: {{expiry_date}}</p>
+        <button onclick="location.href='/select-food/{{id}}'">Select This Item</button>
+    </div>
+    {{/items}}
+    <a href="/add-food">Add New Food Item</a>
+</body>
+</html>
